@@ -15,13 +15,12 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-const axesHelper = new THREE.AxesHelper(1);
-scene.add(axesHelper)
 /**
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-const matcapTexture = textureLoader.load('/textures/matcaps/8.png')
+const matcapDonutTexture = textureLoader.load('/textures/matcaps/1.png')
+const matcapTextTexture = textureLoader.load('/textures/matcaps/8.png')
 
 /*Fonts
 * */
@@ -32,7 +31,7 @@ fontsLoader.load(
     '/fonts/Open Sans_Regular.json',
     (font) => {
         const textGeometry = new THREE.TextGeometry(
-            'Дарова',
+            'Серёга, с др!',
             {
                 font: font,
                 size: 0.5,
@@ -52,11 +51,48 @@ fontsLoader.load(
         //     -(textGeometry.boundingBox.max.z - 0.03) / 2
         // )
         textGeometry.center();
-        const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTexture});
+        const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTextTexture});
         const text = new THREE.Mesh(textGeometry, textMaterial);
         scene.add(text);
+        const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
+        const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapDonutTexture });
+
+
+        for (let i = 0; i < 300; i++) {
+
+            const donut = new THREE.Mesh(donutGeometry, donutMaterial);
+
+            donut.position.set(
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20,
+                (Math.random() - 0.5) * 20,
+            )
+            donut.rotation.set(
+                Math.random() * Math.PI,
+                Math.random() * Math.PI,
+                Math.random() * Math.PI
+
+            )
+
+            const donutScale = Math.random();
+            donut.scale.set(donutScale, donutScale, donutScale);
+            scene.add(donut);
+        }
     }
 )
+
+const cubeTextureLoader = new THREE.CubeTextureLoader();
+const cubeTexture = cubeTextureLoader.setPath('/textures/environmentMaps/4/').load(
+    [
+        'px.png',
+        'nx.png',
+        'py.png',
+        'ny.png',
+        'pz.png',
+        'nz.png',
+    ]
+)
+scene.background = cubeTexture;
 
 /**
  * Object
