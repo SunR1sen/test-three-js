@@ -82,14 +82,14 @@ fontsLoader.load(
 )
 
 const cubeTextureLoader = new THREE.CubeTextureLoader();
-const cubeTexture = cubeTextureLoader.setPath('/textures/environmentMaps/4/').load(
+const cubeTexture = cubeTextureLoader.setPath('/textures/environmentMaps/1/').load(
     [
-        'px.png',
-        'nx.png',
-        'py.png',
-        'ny.png',
-        'pz.png',
-        'nz.png',
+        'px.jpg',
+        'nx.jpg',
+        'py.jpg',
+        'ny.jpg',
+        'pz.jpg',
+        'nz.jpg',
     ]
 )
 scene.background = cubeTexture;
