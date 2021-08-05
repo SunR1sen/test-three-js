@@ -1,6 +1,6 @@
 import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import * as dat from 'dat.gui'
 
 /**
@@ -20,7 +20,26 @@ const scene = new THREE.Scene()
  */
 const textureLoader = new THREE.TextureLoader()
 const matcapDonutTexture = textureLoader.load('/textures/matcaps/1.png')
-const matcapTextTexture = textureLoader.load('/textures/matcaps/8.png')
+const matcapTextTexture = textureLoader.load('/textures/matcaps/8.png');
+const matcapTextTexture1 = textureLoader.load('/textures/matcaps/1.png');
+const matcapTextTexture2 = textureLoader.load('/textures/matcaps/2.png');
+const matcapTextTexture3 = textureLoader.load('/textures/matcaps/3.png');
+const matcapTextTexture4 = textureLoader.load('/textures/matcaps/4.png');
+const matcapTextTexture5 = textureLoader.load('/textures/matcaps/5.png');
+const matcapTextTexture6 = textureLoader.load('/textures/matcaps/6.png');
+const matcapTextTexture7 = textureLoader.load('/textures/matcaps/7.png');
+const matcapTextTexture8 = textureLoader.load('/textures/matcaps/8.png');
+
+const matcapsArray = [
+    matcapTextTexture1,
+    matcapTextTexture2,
+    matcapTextTexture3,
+    matcapTextTexture4,
+    matcapTextTexture5,
+    matcapTextTexture6,
+    matcapTextTexture7,
+    matcapTextTexture8
+]
 
 /*Fonts
 * */
@@ -51,14 +70,16 @@ fontsLoader.load(
         //     -(textGeometry.boundingBox.max.z - 0.03) / 2
         // )
         textGeometry.center();
-        const textMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapTextTexture});
+        const textMaterial = new THREE.MeshMatcapMaterial({matcap: matcapTextTexture});
         const text = new THREE.Mesh(textGeometry, textMaterial);
         scene.add(text);
         const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 20, 45);
-        const donutMaterial = new THREE.MeshMatcapMaterial({ matcap: matcapDonutTexture });
 
 
         for (let i = 0; i < 300; i++) {
+            console.log(i % 8)
+            const donutMaterial = new THREE.MeshMatcapMaterial({matcap: matcapsArray[i % 8]});
+
 
             const donut = new THREE.Mesh(donutGeometry, donutMaterial);
 
@@ -71,7 +92,6 @@ fontsLoader.load(
                 Math.random() * Math.PI,
                 Math.random() * Math.PI,
                 Math.random() * Math.PI
-
             )
 
             const donutScale = Math.random();
@@ -112,8 +132,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -155,8 +174,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const clock = new THREE.Clock()
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
 
     // Update controls
